@@ -9,7 +9,7 @@ router.param('id', (req, res, next, id) => {
   Post.findById(id)
   .then(post => {
     if (!post) {
-      next(new Error('Could not find post'));
+      res.status(401).send('Could not find post')
     }
     req.post = post;
     next();
@@ -19,7 +19,7 @@ router.param('id', (req, res, next, id) => {
 
 router.get('/', (req, res, next) => {
   Post.findAll({})
-  .then(posts => res.send(posts))
+  .then(posts => res.send({posts}))
   .catch(next);
 });
 

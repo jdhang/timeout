@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {push} from 'react-router-redux'
 import {AuthForm} from '../../shared'
+import {Posts} from '../../containers';
 import {login} from '../../redux/modules/auth'
 import './Home.scss'
 
@@ -34,12 +35,7 @@ class Home extends Component {
       return (
         <div id='home'>
           <h1>Time/Out</h1>
-          <div>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
-            vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-            no sea takimata sanctus est Lorem ipsum dolor sit amet.
-          </div>
+          <Posts />
         </div>
       )
     } else {

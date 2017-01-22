@@ -6,11 +6,13 @@ import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import promise from './middleware/promise'
 import auth from './modules/auth'
+import posts from './modules/posts'
 
 export default function configureStore (history, initialState) {
 
   const reducer = combineReducers({
     auth,
+    posts,
     routing
   })
 
