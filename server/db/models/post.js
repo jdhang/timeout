@@ -12,18 +12,20 @@ const definitions = {
   title: {
     type: DataTypes.STRING
   },
-  startTime: {
-    type: DataTypes.DATE
+  body: {
+    type: DataTypes.TEXT
   },
-  endTime: {
-    type: DataTypes.DATE
+  tags: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: []
   }
 }
 
 const methods = {
   classMethods: {
     associate(models) {
-      this.hasMany(models.Post);
+      this.belongsTo(models.User);
+      this.belongsTo(models.Event);
     }
   }
 }
