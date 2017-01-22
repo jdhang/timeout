@@ -28,4 +28,4 @@ const methods = {
   }
 }
 
-export default db.define('Event', definitions, methods);
+export default db.define('events', definitions, methods);
