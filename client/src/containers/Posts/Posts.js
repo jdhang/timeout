@@ -3,6 +3,7 @@
 import React, {Component, PropTypes} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import {Post} from '../../components'
 import {loadPosts} from '../../redux/modules/posts'
 import './Posts.scss'
 
@@ -13,20 +14,34 @@ class Posts extends Component {
     posts: PropTypes.array
   }
 
+  constructor (props) {
+    super(props);
+
+    this.renderPosts = this.renderPosts.bind(this)
+  }
+
   componentDidMount () {
     const {loadPosts} = this.props;
     loadPosts();
   }
 
+  renderPosts () {
+    const {posts} = this.props;
+
+    return posts.map((post, i) => {
+      return <Post key={i} post={post} />
+    });
+  }
+
   render () {
-    const {loading, posts} = this.props;
+    const {loading} = this.props;
 
     if (loading) {
       return <h2>Loading Posts...</h2>
     } else {
       return (
         <div id='posts'>
-          <h2>Posts</h2>
+          {this.renderPosts()}
         </div>
       )
     }

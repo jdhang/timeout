@@ -21,13 +21,6 @@ const definitions = {
   }
 }
 
-const methods = {
-  classMethods: {
-    associate(models) {
-      this.belongsTo(models.User);
-      this.belongsTo(models.Event);
-    }
-  }
-}
+const methods = {}
 
 export default db.define('posts', definitions, methods);

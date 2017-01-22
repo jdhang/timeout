@@ -8,7 +8,7 @@ import {
   load as loadAuth
 } from './redux/modules/auth'
 import { About, Docs, MembersOnly } from './components'
-import { Layout, Auth, Home, Posts } from './containers'
+import { Layout, Auth, Home, Posts, PostForm } from './containers'
 import { NotFound } from './shared'
 
 const getRoutes = (store) => {
@@ -72,6 +72,7 @@ const getRoutes = (store) => {
 
       { /* Routes */ }
       <Route path='posts' components={Posts} />
+      <Route path='posts/add' components={PostForm} />
 
       { /* Catch all routes */ }
       <Route path='*' component={NotFound} />

@@ -2,18 +2,18 @@
 
 import crypto from 'crypto';
 import _omit from 'lodash/omit';
-import Sequelize from 'sequelize';
+import DataTypes from 'sequelize';
 import db from '../_db';
 
 const definitions = {
   email: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   password: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   },
   salt: {
-    type: Sequelize.STRING
+    type: DataTypes.STRING
   }
 }
 
