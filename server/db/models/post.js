@@ -30,4 +30,4 @@ const methods = {
   }
 }
 
-export default db.define('event', definitions, methods);
+export default db.define('Pos', definitions, methods);

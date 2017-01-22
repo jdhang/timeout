@@ -18,7 +18,6 @@ class Layout extends Component {
 
     return (
       <div>
-        <Navbar user={user} dispatch={dispatch} />
         <div id='main' className='container'>
           {children}
         </div>

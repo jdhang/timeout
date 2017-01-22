@@ -13,6 +13,7 @@ module.exports = function (db) {
   configure(app, db)
 
   // Routes definition
+  app.use('/api', require('./routes'));
 
   /*
    Middleware to catch URLs resembling file extensions
