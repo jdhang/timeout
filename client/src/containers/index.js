@@ -1,3 +1,5 @@
 export Auth from './Auth'
+export Home from './Home'
 export Layout from './Layout'
 export Navbar from './Navbar'
+export Posts from './Posts'

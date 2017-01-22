@@ -1,40 +1,40 @@
 'use strict'
 
 import express from 'express';
-import Post from '../../db/models/post';
+import Event from '../../db/models/event';
 
 const router = express.Router();
 
 router.param('id', (req, res, next, id) => {
-  Post.findById(id)
-  .then(post => {
-    if (!post) {
-      next(new Error('Could not find post'));
+  Event.findById(id)
+  .then(event => {
+    if (!event) {
+      next(new Error('Could not find event'));
     }
-    req.post = post;
+    req.event = event;
     next();
   })
   .catch(next);
 });
 
 router.get('/', (req, res, next) => {
-  Post.findAll({})
+  Event.findAll({})
   .then(posts => res.send(posts))
   .catch(next);
 });
 
 router.get('/:id', (req, res, next) => {
-  res.send(req.post);
+  res.send(req.event);
 });
 
-router.post('/:id', (req, res, next) => {
-  Post.update(req.body, {where: {id: req.post.id}})
-  .then(post => res.send(post))
+router.event('/:id', (req, res, next) => {
+  Event.update(req.body, {where: {id: req.event.id}})
+  .then(event => res.send(event))
   .catch(next);
 });
 
 router.delete('/:id', (req, res, next) => {
-  Post.destroy({where: {id: req.params.id}})
+  Event.destroy({where: {id: req.params.id}})
   .then(result => res.send(true))
   .catch(next);
 });

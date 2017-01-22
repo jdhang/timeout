@@ -46,17 +46,15 @@ class Auth extends Component {
           onSubmit={this.handleSignup}
         />
       )
-    } else if ((/login/i).test(pathname)) {
+    } else {
       return (
         <AuthForm
           title='Login'
           buttonLabel='Login'
           buttonStyle='primary'
-          onSubmit={this.handleSignup}
+          onSubmit={this.handleLogin}
         />
       )
-    } else {
-      return null
     }
   }
 }

@@ -7,8 +7,8 @@ import {
   isLoaded as isAuthLoaded,
   load as loadAuth
 } from './redux/modules/auth'
-import { About, Docs, Home, MembersOnly } from './components'
-import { Layout, Auth } from './containers'
+import { About, Docs, MembersOnly } from './components'
+import { Layout, Auth, Home, Posts } from './containers'
 import { NotFound } from './shared'
 
 const getRoutes = (store) => {
@@ -71,8 +71,7 @@ const getRoutes = (store) => {
       </Route>
 
       { /* Routes */ }
-      <Route path='about' component={About} />
-      <Route path='docs' component={Docs} />
+      <Route path='posts' components={Posts} />
 
       { /* Catch all routes */ }
       <Route path='*' component={NotFound} />
