@@ -18,8 +18,18 @@ router.param('id', (req, res, next, id) => {
 });
 
 router.get('/', (req, res, next) => {
-  Post.findAll({})
+  Post.findAll({
+    where: {userId: req.user.id},
+    order: [['createdAt', 'DESC']]
+  })
   .then(posts => res.send({posts}))
+  .catch(next);
+});
+
+router.post('/', (req, res, next) => {
+  Post.create(req.body)
+  .then(post => post.setUser(req.user))
+  .then(post => res.send({post}))
   .catch(next);
 });
 

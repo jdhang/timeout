@@ -18,10 +18,27 @@ router.param('id', (req, res, next, id) => {
 });
 
 router.get('/', (req, res, next) => {
-  Event.findAll({})
-  .then(posts => res.send(posts))
+  Event.findAll({
+    where: {userId: req.user.id}
+  })
+  .then(events => res.send(events))
   .catch(next);
 });
+
+router.post('/', (req, res, next) => {
+  req.body.startTime = new Date();
+  Event.create(req.body)
+  .then(event => event.setUser(req.event))
+  .then(event => res.send({event}))
+  .catch(next);
+});
+
+router.get('/current', (req, res, next) => {
+  Event.findOne({ where: {status: 'in-progress'} })
+  .then(event => res.send({event}))
+  .catch(next);
+});
+
 
 router.get('/:id', (req, res, next) => {
   res.send(req.event);

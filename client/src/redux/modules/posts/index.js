@@ -7,6 +7,10 @@ const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST'
 const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS'
 const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE'
 
+const ADD_POST_REQUEST = 'ADD_POST_REQUEST'
+const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS'
+const ADD_POST_FAILURE = 'ADD_POST_FAILURE'
+
 const initialState = {
   loading: false,
   data: [],
@@ -42,5 +46,12 @@ export function loadPosts () {
   return {
     types: [LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE],
     promise: posts.getAll()
+  }
+}
+
+export function addPost (postData) {
+  return {
+    types: [ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE],
+    promise: posts.addPost(postData)
   }
 }

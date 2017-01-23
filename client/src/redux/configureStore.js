@@ -7,12 +7,14 @@ import thunk from 'redux-thunk'
 import promise from './middleware/promise'
 import auth from './modules/auth'
 import posts from './modules/posts'
+import events from './modules/events'
 
 export default function configureStore (history, initialState) {
 
   const reducer = combineReducers({
     auth,
     posts,
+    events,
     routing
   })
 

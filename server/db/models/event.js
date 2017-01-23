@@ -12,6 +12,10 @@ const definitions = {
   title: {
     type: DataTypes.STRING
   },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: 'in-progress'
+  },
   startTime: {
     type: DataTypes.DATE
   },

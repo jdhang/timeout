@@ -9,8 +9,13 @@ export const getAll = () => {
   return axios.get(`${BASE_URL}/api/posts`)
 }
 
+export const addPost = (postData) => {
+  return axios.post(`${BASE_URL}/api/posts`, postData)
+}
+
 const posts = {
-  getAll
+  getAll,
+  addPost
 }
 
 export default posts
