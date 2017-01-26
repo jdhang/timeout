@@ -1,81 +1,66 @@
 'use strict'
 
 import React, {Component, PropTypes} from 'react'
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
-import {push} from 'react-router-redux'
-import {addPost} from '../../redux/modules/posts'
-
-import {
-  FormGroup,
-  FormControl,
-  ControlLabel,
-  Button
-} from 'react-bootstrap'
+import {push, goBack} from 'react-router-redux'
+import {Field, reduxForm} from 'redux-form'
+import {Input, Textarea, Button} from 'rebass'
 
 class PostForm extends Component {
   static propTypes = {
-    addPost: PropTypes.func,
-    push: PropTypes.func
+    dispatch: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    handleAddPost: PropTypes.func,
+    event: PropTypes.object
   }
 
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      title: '',
-      body: '',
-      tags: []
-    }
+  renderInput = ({ input, label, type }) => {
+    return (
+      <Input
+        {...input}
+        label={label}
+        type={type}
+        placeholder={label}
+      />
+    )
   }
 
-  handleSubmit = (e) => {
-    const {addPost, push} = this.props;
-    e.preventDefault();
-    addPost(this.state)
-      .then(() => push('/'));
-  }
-
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  renderTextarea = ({ input, label }) => {
+    return (
+      <Textarea
+        {...input}
+        label={label}
+        placeholder={label}
+        rows={8}
+      />
+    )
   }
 
   render () {
-    const {title, body, tags} = this.state;
+    const {dispatch, handleSubmit, handleAddPost, event} = this.props;
 
     return (
       <div>
-        <h3>New Post</h3>
-        <form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <FormControl
-              type='text'
-              name='title'
-              placeholder='Title'
-              value={title}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <FormControl
-              componentClass='textarea'
-              name='body'
-              placeholder='Body'
-              value={body}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <Button type='submit' bsStyle='success'>Add Post</Button>
+        <h4>Write a post about {event ? ` for ${event.title}` : ''}</h4>
+        <form onSubmit={handleSubmit(handleAddPost)}>
+          <Field
+            name='title'
+            label='Title'
+            component={this.renderInput}
+            type='text'
+          />
+          <Field
+            name='body'
+            label='Body'
+            component={this.renderTextarea}
+          />
+          <Button type='submit' theme='success'>Add Post</Button>
+          <Button type='button' theme='default' onClick={() => dispatch(goBack())}>Cancel</Button>
         </form>
       </div>
     )
   }
 }
 
-function mapStateToProps (state, ownProps) { return {} }
-
-function mapDispatchToProps (dispatch, ownProps) {
-  return bindActionCreators({addPost, push}, dispatch)
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostForm)
+export default reduxForm({
+  form: 'postForm'
+})(PostForm)

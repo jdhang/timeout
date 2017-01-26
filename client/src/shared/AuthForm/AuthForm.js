@@ -29,7 +29,7 @@ export default class AuthForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      email: '',
+      username: '',
       password: ''
     }
 
@@ -40,7 +40,7 @@ export default class AuthForm extends Component {
   handleSubmit (e) {
     e.preventDefault()
     this.props.onSubmit(this.state)
-    this.setState({ email: '', password: '' })
+    this.setState({ username: '', password: '' })
   }
 
   handleChange (e, field) {
@@ -58,9 +58,9 @@ export default class AuthForm extends Component {
           <FormGroup>
             <FormControl
               type='text'
-              placeholder='Email'
+              placeholder='Username'
               value={email}
-              onChange={(e) => this.handleChange(e, 'email')}
+              onChange={(e) => this.handleChange(e, 'username')}
             />
           </FormGroup>
           <FormGroup>

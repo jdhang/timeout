@@ -6,9 +6,6 @@ import DataTypes from 'sequelize';
 import db from '../_db';
 
 const definitions = {
-  email: {
-    type: DataTypes.STRING
-  },
   firstName: {
     type: DataTypes.STRING
   },
@@ -34,6 +31,9 @@ const methods = {
     },
     correctPassword: function (testPassword) {
       return this.Model.encryptPassword(testPassword, this.salt) === this.password
+    },
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName
     }
   },
   classMethods: {

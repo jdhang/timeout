@@ -9,17 +9,22 @@ export const getAll = () => {
   return axios.get(`${BASE_URL}/api/events`)
 }
 
-export const addEvent = (eventData) => {
+export const createEvent = (eventData) => {
   return axios.post(`${BASE_URL}/api/events`, eventData)
 }
 
+export const endEvent = (eventId) => {
+  return axios.post(`${BASE_URL}/api/events/${eventId}/end`)
+}
+
 export const getCurrent = () => {
-  return axios.post(`${BASE_URL}/api/events/current`)
+  return axios.get(`${BASE_URL}/api/events/current`)
 }
 
 const events = {
   getAll,
-  addEvent,
+  createEvent,
+  endEvent,
   getCurrent
 }
 

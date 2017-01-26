@@ -4,4 +4,23 @@
     width: 300px;
     margin: 0 auto;
   }
+
+  .cross {
+    line-height: 1;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .content {
+    display: flex;
+
+    .left {
+      flex: 1;
+    }
+
+    .right {
+      flex: 2;
+    }
+  }
 }

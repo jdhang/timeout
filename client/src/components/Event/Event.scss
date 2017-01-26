@@ -1,0 +1,24 @@
+.event {
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+  padding: 10px;
+  border: 1px solid black;
+
+  .title {
+    font-size: 115%;
+    font-weight: bold;
+  }
+
+  div {
+    flex: 1;
+
+    .header {
+      font-weight: bold;
+    }
+  }
+}
+
+#in-progress {
+  border: 2px solid rgb(17, 204, 119);
+}

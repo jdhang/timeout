@@ -9,21 +9,15 @@ const definitions = {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  title: {
+  name: {
     type: DataTypes.STRING
   },
   status: {
     type: DataTypes.STRING,
-    defaultValue: 'in-progress'
-  },
-  startTime: {
-    type: DataTypes.DATE
-  },
-  endTime: {
-    type: DataTypes.DATE
+    defaultValue: 'active'
   }
 }
 
 const methods = {}
 
-export default db.define('events', definitions, methods);
+export default db.define('projects', definitions, methods);

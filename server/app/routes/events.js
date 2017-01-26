@@ -19,22 +19,28 @@ router.param('id', (req, res, next, id) => {
 
 router.get('/', (req, res, next) => {
   Event.findAll({
-    where: {userId: req.user.id}
+    where: {userId: req.user.id},
+    order: [['endTime', 'DESC']]
   })
-  .then(events => res.send(events))
+  .then(events => res.send({events}))
   .catch(next);
 });
 
 router.post('/', (req, res, next) => {
   req.body.startTime = new Date();
   Event.create(req.body)
-  .then(event => event.setUser(req.event))
+  .then(event => event.setUser(req.user))
   .then(event => res.send({event}))
   .catch(next);
 });
 
 router.get('/current', (req, res, next) => {
-  Event.findOne({ where: {status: 'in-progress'} })
+  Event.findOne({
+    where: {
+      userId: req.user.id,
+      status: 'in-progress'
+    }
+  })
   .then(event => res.send({event}))
   .catch(next);
 });
@@ -44,9 +50,21 @@ router.get('/:id', (req, res, next) => {
   res.send(req.event);
 });
 
-router.event('/:id', (req, res, next) => {
+router.post('/:id/end', (req, res, next) => {
+  const endingEvent = {...req.event};
+  endingEvent.endTime = new Date();
+  endingEvent.status = 'completed';
+  Event.update(endingEvent, {
+    where: {id: req.event.id},
+    returning: true
+  })
+  .then(result => res.send({event: result[1][0]}))
+  .catch(next);
+});
+
+router.post('/:id', (req, res, next) => {
   Event.update(req.body, {where: {id: req.event.id}})
-  .then(event => res.send(event))
+  .then(event => res.send({event}))
   .catch(next);
 });
 

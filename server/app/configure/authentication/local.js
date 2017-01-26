@@ -9,11 +9,11 @@ module.exports = function (app, db) {
   const User = db.model('user')
 
   // When passport.authenticate('local') is used, this function will receive
-  // the email and password to run the actual authentication logic.
-  const strategyFn = (email, password, done) => {
+  // the username and password to run the actual authentication logic.
+  const strategyFn = (username, password, done) => {
     User.findOne({
       where: {
-        email: email
+        username: username
       }
     })
     .then(user => {
@@ -27,7 +27,7 @@ module.exports = function (app, db) {
     .catch(done)
   }
 
-  passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'}, strategyFn))
+  passport.use(new LocalStrategy({usernameField: 'username', passwordField: 'password'}, strategyFn))
 
   // A POST /signup route to create a new user
   app.post('/signup', (req, res, next) => {
@@ -60,7 +60,7 @@ module.exports = function (app, db) {
       // req.login will establish our session
       req.login(user, loginErr => {
         if (loginErr) return next(loginErr)
-        // We respond with a response object that has user with id and email
+        // We respond with a response object that has user with id and username
         res.status(200).send({
           user: user.sanitize()
         })

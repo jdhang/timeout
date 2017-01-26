@@ -41,6 +41,7 @@ class Posts extends Component {
     } else {
       return (
         <div id='posts'>
+          <h4>Posts</h4>
           {this.renderPosts()}
         </div>
       )

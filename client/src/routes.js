@@ -13,10 +13,11 @@ import {
   Auth,
   Home,
   Posts,
-  PostForm,
+  PostFormContainer,
   Events,
   EventForm
 } from './containers'
+import {SignupForm} from './containers/Auth'
 import { NotFound } from './shared'
 
 const getRoutes = (store) => {
@@ -75,12 +76,12 @@ const getRoutes = (store) => {
       { /* Unauthenticated Routes Only */ }
       <Route onEnter={requireNoUser}>
         <Route path='login' component={Auth} />
-        <Route path='signup' component={Auth} />
+        <Route path='signup' component={SignupForm} />
       </Route>
 
       { /* Routes */ }
       <Route path='posts' components={Posts} />
-      <Route path='addPost' components={PostForm} />
+      <Route path='addPost' components={PostFormContainer} />
       <Route path='events' components={Events} />
 
       { /* Catch all routes */ }

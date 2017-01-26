@@ -28,8 +28,8 @@ class Events extends Component {
   renderEvents () {
     const {events} = this.props;
 
-    return events.map((event, i) => {
-      return <Event key={i} event={event} />
+    return events.filter(event => event.status === 'completed').map(event => {
+      return <Event key={event.id} event={event} />
     });
   }
 
