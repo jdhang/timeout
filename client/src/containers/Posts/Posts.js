@@ -4,7 +4,7 @@ import React, {Component, PropTypes} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {Post} from '../../components'
-import {loadPosts} from '../../redux/modules/posts'
+import {loadPosts} from 'modules/posts/ducks/posts'
 import './Posts.scss'
 
 class Posts extends Component {

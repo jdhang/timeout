@@ -1,15 +1,19 @@
 'use strict'
 
 import React, {Component, PropTypes} from 'react'
+import {push} from 'react-router-redux';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import {Text} from 'rebass'
 import {Event} from '../../components'
-import {loadEvents} from '../../redux/modules/events'
+import {loadEvents, loadToday} from 'modules/events/ducks/events'
 import './Events.scss'
 
 class Events extends Component {
   static propTypes = {
+    push: PropTypes.func,
     loadEvents: PropTypes.func,
+    loadToday: PropTypes.func,
     loading: PropTypes.bool,
     events: PropTypes.array
   }
@@ -21,16 +25,31 @@ class Events extends Component {
   }
 
   componentDidMount () {
-    const {loadEvents} = this.props;
-    loadEvents();
+    const {loadEvents, loadToday} = this.props;
+    loadToday();
+  }
+
+  handleEventSelect = (eventId) => {
+    const {push} = this.props;
+    push(`/e/${eventId}`);
   }
 
   renderEvents () {
     const {events} = this.props;
 
-    return events.filter(event => event.status === 'completed').map(event => {
-      return <Event key={event.id} event={event} />
-    });
+    if (events.length > 0) {
+      return events.filter(event => event.status === 'completed').map(event => {
+        return (
+          <Event
+            key={event.id}
+            event={event}
+            handleSelect={this.handleEventSelect.bind(this, event.id)}
+          />
+        );
+      });
+    } else {
+      return <Text>No events for today yet.</Text>
+    }
   }
 
   render () {
@@ -57,7 +76,7 @@ function mapStateToProps (state, ownProps) {
 }
 
 function mapDispatchToProps (dispatch, ownProps) {
-  return bindActionCreators({loadEvents}, dispatch)
+  return bindActionCreators({loadEvents, loadToday, push}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Events)

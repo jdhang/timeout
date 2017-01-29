@@ -15,6 +15,10 @@ const definitions = {
   body: {
     type: DataTypes.TEXT
   },
+  type: {
+    type: DataTypes.STRING,
+    defaultValue: 'post'
+  },
   tags: {
     type: DataTypes.ARRAY(DataTypes.STRING),
     defaultValue: []

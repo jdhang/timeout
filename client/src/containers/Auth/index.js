@@ -1,2 +1,2 @@
-export default from './Auth'
+export LoginForm from './LoginForm'
 export SignupForm from './SignupForm'

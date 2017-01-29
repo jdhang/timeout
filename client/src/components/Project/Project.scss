@@ -1,0 +1,18 @@
+.project {
+  display: flex;
+  align-items: center;
+  margin: 10px 0px;
+  padding: 10px;
+  border: 1px solid black;
+
+  .name, .count {
+    flex: 1;
+
+    .header {}
+  }
+
+  .count {
+    text-align: right;
+    align-self: flex-end;
+  }
+}

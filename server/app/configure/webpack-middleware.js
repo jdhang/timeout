@@ -11,11 +11,11 @@ module.exports = function (app) {
     const config = require('../../../webpack.dev.config.js')
     const compiler = webpack(config)
 
-    app.use(webpackHotMiddleware(compiler))
     app.use(webpackDevMiddleware(compiler, {
       noInfo: true,
       publicPath: config.output.publicPath
     }))
+    app.use(webpackHotMiddleware(compiler))
   }
 
 }

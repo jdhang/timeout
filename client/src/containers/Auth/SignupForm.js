@@ -2,9 +2,10 @@
 
 import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
-import {Field, reduxForm} from 'redux-form'
-import {Input, Button} from 'rebass'
-import {signup} from '../../redux/modules/auth'
+import {reduxForm} from 'redux-form'
+import {Button} from 'rebass'
+import {TextField} from 'shared'
+import {signup} from 'modules/auth/ducks/auth'
 
 class SignupForm extends Component {
   static propTypes = {
@@ -14,55 +15,26 @@ class SignupForm extends Component {
     submitting: PropTypes.bool
   }
 
-  renderInput = ({ input, label, type }) => {
-    return (
-      <Input
-        {...input}
-        label={label}
-        type={type}
-        placeholder={label}
-      />
-    )
-  }
-
   handleSignup = (data) => {
     const {dispatch} = this.props;
     dispatch(signup(data))
-    .then(() => dispatch(push('/')))
-
+    .then(() => dispatch(push('/home')));
   }
 
   render () {
     const {handleSubmit, pristine, submitting} = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.handleSignup)}>
-        <Field
-          name='username'
-          label='Username'
-          component={this.renderInput}
-          type='text'
-        />
-        <Field
-          name='firstName'
-          label='First Name'
-          component={this.renderInput}
-          type='text'
-        />
-        <Field
-          name='lastName'
-          label='Last Name'
-          component={this.renderInput}
-          type='text'
-        />
-        <Field
-          name='password'
-          label='Password'
-          component={this.renderInput}
-          type='password'
-        />
-        <Button type='submit' disabled={pristine || submitting}>Signup</Button>
-      </form>
+      <div>
+        <h4>Signup</h4>
+        <form onSubmit={handleSubmit(this.handleSignup)}>
+          <TextField name='username' label='Username' type='text' />
+          <TextField name='firstName' label='First Name' type='text' />
+          <TextField name='lastName' label='Last Name' type='text' />
+          <TextField name='password' label='Password' type='password' />
+          <Button type='submit' disabled={pristine || submitting}>Signup</Button>
+        </form>
+      </div>
     )
   }
 }

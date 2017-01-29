@@ -1,7 +1,6 @@
 'use strict'
 
 import React from 'react'
-import { Row, Col, Carousel } from 'react-bootstrap'
 import getPics from '../../resources/Pics'
 import './About.scss'
 

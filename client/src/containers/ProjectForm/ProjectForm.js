@@ -2,8 +2,9 @@
 
 import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
-import {Field, reduxForm} from 'redux-form'
-import {Input, Button} from 'rebass'
+import {reduxForm} from 'redux-form'
+import {TextField} from 'shared'
+import {Button} from 'rebass'
 
 class ProjectForm extends Component {
   static propTypes = {
@@ -14,17 +15,6 @@ class ProjectForm extends Component {
     hideForm: PropTypes.func
   }
 
-  renderInput = ({ input, label, type }) => {
-    return (
-      <Input
-        {...input}
-        label={label}
-        type={type}
-        placeholder={label}
-      />
-    )
-  }
-
   render () {
     const {handleSubmit, handleCreateProject, hideForm} = this.props;
 
@@ -32,12 +22,7 @@ class ProjectForm extends Component {
       <div>
         <h4>New Project</h4>
         <form onSubmit={handleSubmit(handleCreateProject)}>
-          <Field
-            name='name'
-            label='Name'
-            component={this.renderInput}
-            type='text'
-          />
+          <TextField name='name' label='Name' type='text' />
           <Button type='submit' theme='success'>Create Project</Button>
           <Button type='button' theme='default' onClick={hideForm}>Cancel</Button>
         </form>

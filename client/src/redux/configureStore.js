@@ -6,18 +6,12 @@ import {reducer as formReducer} from 'redux-form'
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import promise from './middleware/promise'
-import auth from './modules/auth'
-import events from './modules/events'
-import posts from './modules/posts'
-import projects from './modules/projects'
+import {reducers} from  'modules'
 
 export default function configureStore (history, initialState) {
 
   const reducer = combineReducers({
-    auth,
-    events,
-    posts,
-    projects,
+    ...reducers,
     routing,
     form: formReducer
   })

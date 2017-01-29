@@ -4,6 +4,7 @@ const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const precss = require('precss')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const indexPath = path.join(__dirname, 'client', 'src', 'index.html')
@@ -22,7 +23,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.jsx', '.css', '.scss'],
-    modulesDirectories: ['client', 'node_modules']
+    modulesDirectories: ['client/src', 'node_modules']
   },
   module: {
     loaders: [
@@ -34,7 +35,7 @@ module.exports = {
       {
         test: /\.s?css$/,
         loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss!sass?sourceMap'),
-        include: /(client)|(node_modules)/
+        include: /(client)/
       }
     ]
   },
@@ -42,6 +43,10 @@ module.exports = {
     return [autoprefixer, precss]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      inject: true,
+      template: indexPath
+    }),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')

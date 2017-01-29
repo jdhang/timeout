@@ -2,6 +2,7 @@
 
 import express from 'express';
 import Project from '../../db/models/project';
+import Event from '../../db/models/event';
 
 const router = express.Router();
 
@@ -19,7 +20,8 @@ router.param('id', (req, res, next, id) => {
 
 router.get('/', (req, res, next) => {
   Project.findAll({
-    where: {userId: req.user.id}
+    where: {userId: req.user.id},
+    include: {model: Event}
   })
   .then(projects => res.send({projects}))
   .catch(next);
@@ -28,6 +30,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   Project.create(req.body)
   .then(project => project.setUser(req.user))
+  .then(project => Project.findById(project.id, {include: {model: Event}}))
   .then(project => res.send({project}))
   .catch(next);
 });

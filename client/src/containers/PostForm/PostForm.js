@@ -3,58 +3,56 @@
 import React, {Component, PropTypes} from 'react'
 import {push, goBack} from 'react-router-redux'
 import {Field, reduxForm} from 'redux-form'
+import {TextArea, TextField} from 'shared'
 import {Input, Textarea, Button} from 'rebass'
 
 class PostForm extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
     handleSubmit: PropTypes.func,
-    handleAddPost: PropTypes.func,
-    event: PropTypes.object
+    handleAddPost: PropTypes.func.isRequired,
+    event: PropTypes.object,
+    type: PropTypes.string
   }
 
-  renderInput = ({ input, label, type }) => {
-    return (
-      <Input
-        {...input}
-        label={label}
-        type={type}
-        placeholder={label}
-      />
-    )
-  }
-
-  renderTextarea = ({ input, label }) => {
-    return (
-      <Textarea
-        {...input}
-        label={label}
-        placeholder={label}
-        rows={8}
-      />
-    )
+  renderTitle = () => {
+    const {type, event} = this.props;
+    if (type === 'post') {
+      return (
+        <h4>Write a post about {event ? ` for ${event.title}` : ''}</h4>
+      );
+    }
   }
 
   render () {
-    const {dispatch, handleSubmit, handleAddPost, event} = this.props;
+    const {dispatch, handleSubmit, handleAddPost, event, type} = this.props;
 
     return (
       <div>
-        <h4>Write a post about {event ? ` for ${event.title}` : ''}</h4>
+        {this.renderTitle()}
         <form onSubmit={handleSubmit(handleAddPost)}>
-          <Field
-            name='title'
-            label='Title'
-            component={this.renderInput}
-            type='text'
-          />
-          <Field
+          {
+            type === 'post'
+              ? <TextField name='title' label='Title' type='text' />
+              : null
+          }
+          <TextArea
             name='body'
-            label='Body'
-            component={this.renderTextarea}
+            label={type === 'post' ? 'Body' : 'Notes'}
+            placeholder={type !== 'post' ? 'Write notes here' : null}
           />
-          <Button type='submit' theme='success'>Add Post</Button>
-          <Button type='button' theme='default' onClick={() => dispatch(goBack())}>Cancel</Button>
+          <Button type='submit' theme='success'>
+            {
+              type ==='post'
+                ? 'Add Post'
+                : 'Save Notes'
+            }
+          </Button>
+          {
+            type === 'post'
+              ? <Button type='button' theme='default' onClick={() => dispatch(goBack())}>Cancel</Button>
+              : null
+          }
         </form>
       </div>
     )

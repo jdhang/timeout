@@ -6,18 +6,19 @@ import { Route, IndexRoute } from 'react-router'
 import {
   isLoaded as isAuthLoaded,
   load as loadAuth
-} from './redux/modules/auth'
-import { About, Docs, MembersOnly } from './components'
+} from 'modules/auth/ducks/auth'
+import { About, Docs, MembersOnly, EventDetail } from './components'
 import {
   Layout,
   Auth,
   Home,
   Posts,
   PostFormContainer,
+  PostContainer,
   Events,
   EventForm
 } from './containers'
-import {SignupForm} from './containers/Auth'
+import {SignupForm, LoginForm} from './containers/Auth'
 import { NotFound } from './shared'
 
 const getRoutes = (store) => {
@@ -34,7 +35,8 @@ const getRoutes = (store) => {
     function checkAuth () {
       const { auth: { user } } = store.getState();
       if (!user) {
-        replace('/');
+        console.log('redirecting')
+        replace('/login');
       }
       next();
     }
@@ -50,7 +52,7 @@ const getRoutes = (store) => {
     function checkAuth () {
       const { auth: { user } } = store.getState();
       if (user) {
-        replace('/membersOnly');
+        replace('/home');
       }
       next();
     }
@@ -66,22 +68,25 @@ const getRoutes = (store) => {
     <Route path='/' onEnter={getAuth} component={Layout}>
 
       { /* Home route */ }
-      <IndexRoute component={Home} />
+      <IndexRoute onEnter={requireLogin} component={Home} />
 
       { /* Authenticated Routes */ }
       <Route onEnter={requireLogin}>
         <Route path='membersOnly' component={MembersOnly} />
+        <Route path='home' component={Home} />
+        <Route path='p/:postId' component={PostContainer} />
+        <Route path='e/:eventId' component={EventDetail} />
+        <Route path='e/:eventId/addPost' components={PostFormContainer} />
       </Route>
 
       { /* Unauthenticated Routes Only */ }
       <Route onEnter={requireNoUser}>
-        <Route path='login' component={Auth} />
+        <Route path='login' component={LoginForm} />
         <Route path='signup' component={SignupForm} />
       </Route>
 
       { /* Routes */ }
       <Route path='posts' components={Posts} />
-      <Route path='addPost' components={PostFormContainer} />
       <Route path='events' components={Events} />
 
       { /* Catch all routes */ }

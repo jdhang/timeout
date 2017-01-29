@@ -1,5 +1,7 @@
 export About from './About'
 export Docs from './Docs'
 export Event from './Event'
+export EventDetail from './Event/EventDetail'
 export Post from './Post'
+export Project from './Project/Project'
 export MembersOnly from './MembersOnly'

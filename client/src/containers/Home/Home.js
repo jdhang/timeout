@@ -5,12 +5,11 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {push} from 'react-router-redux'
 import {Button, Close} from 'rebass'
-import {AuthForm} from '../../shared'
 import {Posts, Events, EventForm, Projects, ProjectForm} from '../../containers'
 import {Event} from '../../components';
-import {login} from '../../redux/modules/auth'
-import {eventActions} from '../../redux/modules/events'
-import {projectActions} from '../../redux/modules/projects'
+import {login} from 'modules/auth/ducks/auth'
+import {eventActions} from 'modules/events/ducks/events'
+import {projectActions} from 'modules/projects/ducks/projects'
 import './Home.scss'
 
 class Home extends Component {
@@ -25,7 +24,8 @@ class Home extends Component {
     push: PropTypes.func,
     currentEvent: PropTypes.object,
     loadCurrentEvent: PropTypes.func,
-    loadingCurrent: PropTypes.bool
+    loadingCurrent: PropTypes.bool,
+    creating: PropTypes.bool
   }
 
   constructor (props) {
@@ -33,7 +33,8 @@ class Home extends Component {
 
     this.state = {
       showEventForm: false,
-      showProjectForm: false
+      showProjectForm: false,
+      showPostForm: false
     }
   }
 
@@ -59,6 +60,13 @@ class Home extends Component {
     this.setState({ showProjectForm: false });
   }
 
+  showPostForm = () => {
+    this.setState({ showPostForm: true });
+  }
+
+  hidePostForm = () => {
+    this.setState({ showPostForm: false });
+  }
 
   handleLogin = (credentials) => {
     const {login, push} = this.props;
@@ -75,7 +83,7 @@ class Home extends Component {
   handleEndEvent = () => {
     const {endEvent, currentEvent, push} = this.props;
     endEvent(currentEvent.id)
-      .then(() => push('/addPost'));
+      .then(() => push(`/e/${currentEvent.id}/addPost`));
   }
 
   handleCreateProject = (data) => {
@@ -85,15 +93,20 @@ class Home extends Component {
   }
 
   renderEventForm = () => {
-    const {showEventForm, showProjectForm} = this.state;
-    const {currentEvent, loadingCurrent, projects} = this.props;
+    const {showEventForm, showProjectForm, showPostForm} = this.state;
+    const {currentEvent, loadingCurrent, creating, projects} = this.props;
 
-    if (loadingCurrent) {
+    if (loadingCurrent || creating) {
       return <h3>Loading...</h3>
     } else if (currentEvent) {
       return (
         <div>
-          <Event event={currentEvent} />
+          <Event
+            event={currentEvent}
+            show={showPostForm}
+            showForm={this.showPostForm}
+            hideForm={this.hidePostForm}
+          />
           <Button theme='error' onClick={this.handleEndEvent}>
             <span className='cross'>×</span> Stop Event
           </Button>
@@ -128,7 +141,7 @@ class Home extends Component {
     } else {
       return (
         <Button theme='warning' onClick={this.showProjectForm}>
-          + New Project
+          + Create Project
         </Button>
       );
     }
@@ -149,7 +162,7 @@ class Home extends Component {
             <Projects />
           </div>
           <div className='right'>
-            <h4>Events</h4>
+            <h4>Today's Events</h4>
             <Events />
           </div>
         </div>
@@ -163,8 +176,12 @@ class Home extends Component {
     if (loaded) {
       return (
         <div>
-          {this.renderProjectForm()}
-          {this.renderEventForm()}
+          <div className='form'>
+            {this.renderProjectForm()}
+          </div>
+          <div className='form'>
+            {this.renderEventForm()}
+          </div>
           {this.renderContent()}
         </div>
       );
@@ -192,6 +209,7 @@ function mapStateToProps (state, ownProps) {
     user: auth.user,
     currentEvent: events.current,
     loadingCurrent: events.loadingCurrent,
+    creating: events.creating,
     projects: projects.data
   }
 }

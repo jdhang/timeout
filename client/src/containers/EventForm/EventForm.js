@@ -3,7 +3,8 @@
 import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {Field, reduxForm} from 'redux-form'
-import {Input, Button, Select} from 'rebass'
+import {TextField} from 'shared'
+import {Button, Select} from 'rebass'
 
 class EventForm extends Component {
   static propTypes = {
@@ -15,26 +16,13 @@ class EventForm extends Component {
     projects: PropTypes.object
   }
 
-  renderInput = ({ input, label, type }) => {
-    return (
-      <Input
-        {...input}
-        label={label}
-        type={type}
-        placeholder={label}
-      />
-    );
-  }
-
   renderProjectSelect = ({ input, label }) => {
     const {projects} = this.props;
-    let projectOptions;
-    if (Object.keys(projects).length === 0) {
-      projectOptions = [{children: 'Other', value: 'other'}];
-    } else {
-      projectOptions = Object.keys(projects).map(id => {
+    let projectOptions = [{children: 'Select a project...', value: ''}];
+    if (Object.keys(projects).length !== 0) {
+      projectOptions = projectOptions.concat(Object.keys(projects).map(id => {
         return {children: projects[id].name, value: id}
-      });
+      }));
     }
 
     return (
@@ -47,18 +35,13 @@ class EventForm extends Component {
   }
 
   render () {
-    const {handleSubmit, handleCreateEvent, hideForm} = this.props;
+    const {handleSubmit, handleCreateEvent, hideForm, projects} = this.props;
 
     return (
       <div>
         <h4>New Event</h4>
         <form onSubmit={handleSubmit(handleCreateEvent)}>
-          <Field
-            name='title'
-            label='Title'
-            component={this.renderInput}
-            type='text'
-          />
+          <TextField name='title' label='Title' type='text' />
           <Field
             name='projectId'
             label='Project'

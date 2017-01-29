@@ -1,24 +1,44 @@
-.event {
-  display: flex;
-  align-items: center;
+.event, .eventDetail {
   margin: 10px 0px;
   padding: 10px;
   border: 1px solid black;
 
-  .title {
-    font-size: 115%;
-    font-weight: bold;
+  .flexRow {
+    display: flex;
+    align-items: center;
   }
 
-  div {
-    flex: 1;
+  .title, .midCol, .inProgress, .postForm {
+    flex: 2;
+  }
 
+  .duration {
+    flex: 1;
+  }
+
+  .title, .midCol, .duration, .inProgress, .postForm {
     .header {
       font-weight: bold;
     }
+  }
+
+  .inProgress {
+    padding-top: 20px;
+  }
+
+  .duration {
+    text-align: right;
+  }
+
+  .notesForm {
+    cursor: pointer;
   }
 }
 
 #in-progress {
   border: 2px solid rgb(17, 204, 119);
+}
+
+.event {
+  cursor: pointer;
 }

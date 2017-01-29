@@ -3,10 +3,8 @@
 import React, { Component, PropTypes } from 'react'
 import { IndexLink, Link } from 'react-router'
 import { push } from 'react-router-redux'
-import { Navbar, Nav, NavItem, Button } from 'react-bootstrap'
-import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap'
-import { logout } from '../../redux/modules/auth'
-import Logo from '../../shared/Logo'
+import { logout } from 'modules/auth/ducks/auth'
+import { Logo } from '../../shared'
 import './Navbar.scss'
 
 const NAV_ITEMS = [

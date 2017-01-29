@@ -3,8 +3,10 @@
 import React, {Component, PropTypes} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
+import _orderBy from 'lodash/orderBy'
+import {Text} from 'rebass'
 import {Project} from '../../components'
-import {loadProjects} from '../../redux/modules/projects'
+import {loadProjects} from 'modules/projects/ducks/projects'
 import './Projects.scss'
 
 class Projects extends Component {
@@ -25,23 +27,26 @@ class Projects extends Component {
 
   renderProjects = () =>{
     const {projects} = this.props;
+    const sortedProjects = _orderBy(projects, ['events.length'], ['desc']);
 
-    return Object.keys(projects).map(id => (
-      <li key={id}>{projects[id].name}</li>
-    ));
+    if (sortedProjects.length > 0) {
+      return sortedProjects.map(project => (
+        <Project key={project.id} project={project} />
+      ));
+    } else {
+      return <Text>No projects yet.</Text>
+    }
   }
 
   render () {
     const {loading} = this.props;
 
     if (loading) {
-      return <h2>Loading Projects...</h2>
+      return <h4>Loading Projects...</h4>
     } else {
       return (
         <div id='projects'>
-          <ul>
-            {this.renderProjects()}
-          </ul>
+          {this.renderProjects()}
         </div>
       )
     }

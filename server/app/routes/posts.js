@@ -39,13 +39,26 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/:id', (req, res, next) => {
   Post.update(req.body, {where: {id: req.post.id}})
-  .then(post => res.send(post))
+  .then(result => {
+    if (result) {
+      return Post.findById(req.post.id);
+    } else {
+      throw new Error('Cound not update post');
+    }
+  })
+  .then(post => res.send({post}))
   .catch(next);
 });
 
 router.delete('/:id', (req, res, next) => {
   Post.destroy({where: {id: req.params.id}})
-  .then(result => res.send(true))
+  .then(result => {
+    if (result) {
+      res.send(true)
+    } else {
+      throw new Error('Could not delete post');
+    }
+  })
   .catch(next);
 });
 

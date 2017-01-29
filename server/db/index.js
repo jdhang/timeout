@@ -9,6 +9,7 @@ import Event from './models/event'
 import Post from './models/post'
 import Project from './models/project'
 
+// Associations
 User.hasMany(Project)
 User.hasMany(Event)
 User.hasMany(Post)
@@ -19,3 +20,6 @@ Event.belongsTo(User)
 Event.hasMany(Post)
 Post.belongsTo(User)
 Post.belongsTo(Event)
+
+// Default Scopes
+Event.addScope('defaultScope', { include: [{model: Project}, {model: Post}] }, { override: true })
