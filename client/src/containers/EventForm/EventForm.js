@@ -3,8 +3,8 @@
 import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {Field, reduxForm} from 'redux-form'
-import {TextField} from 'shared'
-import {Button, Select} from 'rebass'
+import {Select, TextField} from 'shared'
+import {Button, Label, Switch} from 'rebass'
 
 class EventForm extends Component {
   static propTypes = {
@@ -16,7 +16,15 @@ class EventForm extends Component {
     projects: PropTypes.object
   }
 
-  renderProjectSelect = ({ input, label }) => {
+  state = {
+    show: false
+  }
+
+  toggleDuration = (e, newValue, oldValue) => {
+    this.setState({ show: newValue === 'timed' })
+  }
+
+  generateOptions = () => {
     const {projects} = this.props;
     let projectOptions = [{children: 'Select a project...', value: ''}];
     if (Object.keys(projects).length !== 0) {
@@ -24,29 +32,55 @@ class EventForm extends Component {
         return {children: projects[id].name, value: id}
       }));
     }
+    return projectOptions;
+  }
+
+  renderDuration = () => {
+    const {show} = this.state;
+
+    if (show) {
+      return (
+        <div>
+          Duration Input
+        </div>
+      );
+    }
+  }
+
+  renderSwitch = ({ input: { value, onChange }, label, options }) => {
+    const checked = value === 'timed';
+    const newValue = checked ? 'track' : 'timed';
 
     return (
-      <Select
-        {...input}
-        label={label}
-        options={projectOptions}
-      />
+      <div>
+        <div><Label>{label}</Label></div>
+        <span>Tracking</span>
+        <Switch checked={checked} onClick={() => onChange(newValue)} />
+        <span>Timed</span>
+      </div>
     );
   }
 
   render () {
-    const {handleSubmit, handleCreateEvent, hideForm, projects} = this.props;
+    const {handleSubmit, handleCreateEvent, hideForm} = this.props;
 
     return (
       <div>
         <h4>New Event</h4>
         <form onSubmit={handleSubmit(handleCreateEvent)}>
           <TextField name='title' label='Title' type='text' />
-          <Field
+          <Select
             name='projectId'
             label='Project'
-            component={this.renderProjectSelect}
+            options={this.generateOptions()}
           />
+          <Field
+            name='type'
+            label='Type'
+            component={this.renderSwitch}
+            onChange={this.toggleDuration}
+          />
+          {this.renderDuration()}
           <Button type='submit' theme='success'>Start Event</Button>
           <Button type='button' theme='default' onClick={hideForm}>Cancel</Button>
         </form>

@@ -2,26 +2,24 @@
 
 import React, {Component, PropTypes} from 'react';
 import {Field} from 'redux-form';
-import {Input} from 'rebass';
+import {Select as RebassSelect} from 'rebass';
 
-export default class TextField extends Component {
+export default class Select extends Component {
   static propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
-    type: PropTypes.string,
-    placeholder: PropTypes.string,
+    options: PropTypes.array,
     hideLabel: PropTypes.bool,
     style: PropTypes.object
   }
 
-  renderInput = ({ input, label, hideLabel, type, placeholder, style }) => {
+  renderSelect = ({ input, options, label, hideLabel, style }) => {
     return (
-      <Input
+      <RebassSelect
         {...input}
         label={label}
         hideLabel={hideLabel}
-        type={type}
-        placeholder={placeholder || label}
+        options={options}
         style={style}
       />
     );
@@ -31,7 +29,7 @@ export default class TextField extends Component {
     return (
       <Field
         {...this.props}
-        component={this.renderInput}
+        component={this.renderSelect}
       />
     );
   }

@@ -16,6 +16,13 @@ const definitions = {
     type: DataTypes.STRING,
     defaultValue: 'in-progress'
   },
+  type: {
+    type: DataTypes.STRING,
+    defaultValue: 'track'
+  },
+  notes: {
+    type: DataTypes.TEXT
+  },
   endTime: {
     type: DataTypes.DATE
   }

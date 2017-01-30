@@ -11,11 +11,16 @@ import './Events.scss'
 
 class Events extends Component {
   static propTypes = {
+    filter: PropTypes.string,
     push: PropTypes.func,
     loadEvents: PropTypes.func,
     loadToday: PropTypes.func,
     loading: PropTypes.bool,
     events: PropTypes.array
+  }
+
+  static defaultProps = {
+    filter: 'today'
   }
 
   constructor (props) {
@@ -25,8 +30,12 @@ class Events extends Component {
   }
 
   componentDidMount () {
-    const {loadEvents, loadToday} = this.props;
-    loadToday();
+    const {filter, loadEvents, loadToday} = this.props;
+    if (filter === 'all') {
+      loadEvents();
+    } else if (filter === 'today') {
+      loadToday();
+    }
   }
 
   handleEventSelect = (eventId) => {

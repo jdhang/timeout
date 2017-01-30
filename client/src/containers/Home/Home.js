@@ -4,7 +4,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
 import {push} from 'react-router-redux'
-import {Button, Close} from 'rebass'
+import {Button, Tooltip} from 'rebass'
 import {Posts, Events, EventForm, Projects, ProjectForm} from '../../containers'
 import {Event} from '../../components';
 import {login} from 'modules/auth/ducks/auth'
@@ -52,26 +52,8 @@ class Home extends Component {
     this.setState({ showEventForm: false });
   }
 
-  showProjectForm = () => {
-    this.setState({ showProjectForm: true });
-  }
-
-  hideProjectForm = () => {
-    this.setState({ showProjectForm: false });
-  }
-
-  showPostForm = () => {
-    this.setState({ showPostForm: true });
-  }
-
-  hidePostForm = () => {
-    this.setState({ showPostForm: false });
-  }
-
-  handleLogin = (credentials) => {
-    const {login, push} = this.props;
-    login(credentials)
-      .then(() => push('/posts'))
+  toggleProjectForm = () => {
+    this.setState({ showProjectForm: !this.state.showProjectForm });
   }
 
   handleCreateEvent = (data) => {
@@ -108,7 +90,7 @@ class Home extends Component {
             hideForm={this.hidePostForm}
           />
           <Button theme='error' onClick={this.handleEndEvent}>
-            <span className='cross'>×</span> Stop Event
+            <i className='fa fa-times fa-fw'></i> Stop Event
           </Button>
         </div>
       )
@@ -123,7 +105,7 @@ class Home extends Component {
     } else {
       return (
         <Button onClick={this.showEventForm}>
-          + New Event
+          <i className='fa fa-plus fa-fw'></i> New Event
         </Button>
       );
     }
@@ -133,32 +115,47 @@ class Home extends Component {
     const {showProjectForm} = this.state;
     if (showProjectForm) {
       return (
-        <ProjectForm
-          handleCreateProject={this.handleCreateProject}
-          hideForm={this.hideProjectForm}
-        />
+        <div className='form'>
+          <ProjectForm
+            handleCreateProject={this.handleCreateProject}
+            showBorder={true}
+          />
+        </div>
       )
-    } else {
-      return (
-        <Button theme='warning' onClick={this.showProjectForm}>
-          + Create Project
-        </Button>
-      );
     }
   }
 
+  renderAddButton = () => {
+    const {showProjectForm} = this.state;
+    return (
+      <span className='button'>
+        <Tooltip title={showProjectForm ? 'Hide Form' : 'AddProject'}>
+          <Button
+            style={{ padding: '3px 5px 2px', minHeight: 0 }}
+            theme={showProjectForm ? 'error' : 'success'}
+            onClick={this.toggleProjectForm}
+          >
+            <i className={`fa fa-${showProjectForm ? 'minus' : 'plus'} fa-fw`}></i>
+          </Button>
+        </Tooltip>
+      </span>
+    );
+  }
+
   renderContent = () => {
-    const {showEventForm, showProjectForm} = this.state;
+    const {showEventForm} = this.state;
 
     if (showEventForm) {
       return <Events />
-    } else if (showProjectForm) {
-      return <Projects />
     } else {
       return (
         <div className='content'>
           <div className='left'>
-            <h4>Projects</h4>
+            <h4>
+              Projects
+              {this.renderAddButton()}
+            </h4>
+            {this.renderProjectForm()}
             <Projects />
           </div>
           <div className='right'>
@@ -176,9 +173,6 @@ class Home extends Component {
     if (loaded) {
       return (
         <div>
-          <div className='form'>
-            {this.renderProjectForm()}
-          </div>
           <div className='form'>
             {this.renderEventForm()}
           </div>

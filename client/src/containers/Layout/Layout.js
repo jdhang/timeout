@@ -1,12 +1,11 @@
 'use strict'
 
-import React, { Component, PropTypes } from 'react'
-import {connect} from 'react-redux'
-import Navbar from '../Navbar'
-import './Layout.scss'
+import React, { Component, PropTypes } from 'react';
+import {connect} from 'react-redux';
+import Navbar from '../Navbar';
+import './Layout.scss';
 
 class Layout extends Component {
-
   static propTypes = {
     children: PropTypes.object,
     user: PropTypes.object,

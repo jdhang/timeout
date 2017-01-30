@@ -1,18 +1,23 @@
 .project {
-  display: flex;
-  align-items: center;
   margin: 10px 0px;
   padding: 10px;
   border: 1px solid black;
 
-  .name, .count {
-    flex: 1;
+  .flexRow {
+    display: flex;
+    align-items: center;
 
-    .header {}
-  }
+    .name, .count {
+      flex: 1;
+    }
 
-  .count {
-    text-align: right;
-    align-self: flex-end;
+    .count {
+      text-align: right;
+      align-self: flex-end;
+    }
+
+    .details {
+      font-size: 90%;
+    }
   }
 }

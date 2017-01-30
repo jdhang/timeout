@@ -3,6 +3,7 @@
 import React, {PropTypes} from 'react'
 import Moment from 'moment'
 import {Arrow, Text} from 'rebass'
+import {TextArea} from 'shared'
 import {PostFormContainer} from 'containers'
 import './Event.scss'
 
@@ -45,7 +46,7 @@ export default function Event ({ event, show, showForm, hideForm, handleSelect }
             Take Notes
             <Arrow direction={show ? 'down' : 'up'} />
           </div>
-          {show ? <PostFormContainer type='notes' showEvent={false} /> : null}
+          {show ? <TextArea name='notes' label='Name' /> : null}
         </div>
       );
     }

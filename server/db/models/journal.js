@@ -9,18 +9,13 @@ const definitions = {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true
   },
-  name: {
-    type: DataTypes.STRING
-  },
-  status: {
-    type: DataTypes.STRING,
-    defaultValue: 'active'
-  },
-  notes: {
+  morning: {
     type: DataTypes.TEXT
+  },
+  night: {
   }
 }
 
 const methods = {}
 
-export default db.define('projects', definitions, methods);
+export default db.define('journals', definitions, methods);

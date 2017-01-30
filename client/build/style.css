@@ -23,56 +23,9 @@
     background-image: none; }
 #docs {
   text-align: center; }
-.event {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 10px 0px;
-  padding: 10px;
-  border: 1px solid black; }
-  .event .title, .event .duration, .event .midCol {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1; }
-    .event .title .header, .event .duration .header, .event .midCol .header {
-      font-weight: bold; }
-  .event .duration {
-    text-align: right; }
-
-#in-progress {
-  border: 2px solid #11cc77; }
-.post {
-  border: 1px solid black;
-  padding: 20px;
-  margin: 10px 0px; }
-  .post .title {
-    font-size: 20px;
-    font-weight: 400; }
-  .post .tags {
-    font-weight: 300; }
-.project {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 10px 0px;
-  padding: 10px;
-  border: 1px solid black; }
-  .project .name, .project .count {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1; }
-  .project .count {
-    text-align: right;
-    -ms-flex-item-align: end;
-        align-self: flex-end; }
-#members-only {
-  text-align: center; }
+.logo img {
+  display: block;
+  width: 100%; }
 #home .logo {
   width: 300px;
   margin: 0 auto; }
@@ -96,12 +49,11 @@
         -ms-flex: 1;
             flex: 1; }
   #home .content .right {
-    -webkit-box-flex: 2;
-        -ms-flex: 2;
-            flex: 2; }
-.logo img {
-  display: block;
-  width: 100%; }
+    -webkit-box-flex: 3;
+        -ms-flex: 3;
+            flex: 3; }
+#events {
+  margin: 10px 10px 10px 0px; }
 .navbar .logo {
   margin-top: 12px;
   margin-right: 20px;
@@ -134,3 +86,62 @@ body {
   padding-top: 20px; }
 #projects {
   margin: 10px 10px 10px 0px; }
+.event, .eventDetail {
+  margin: 10px 0px;
+  padding: 10px;
+  border: 1px solid black; }
+  .event .flexRow, .eventDetail .flexRow {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+  .event .title, .event .midCol, .event .inProgress, .event .postForm, .eventDetail .title, .eventDetail .midCol, .eventDetail .inProgress, .eventDetail .postForm {
+    -webkit-box-flex: 2;
+        -ms-flex: 2;
+            flex: 2; }
+  .event .duration, .eventDetail .duration {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1; }
+  .event .title .header, .event .midCol .header, .event .duration .header, .event .inProgress .header, .event .postForm .header, .eventDetail .title .header, .eventDetail .midCol .header, .eventDetail .duration .header, .eventDetail .inProgress .header, .eventDetail .postForm .header {
+    font-weight: bold; }
+  .event .inProgress, .eventDetail .inProgress {
+    padding-top: 20px; }
+  .event .duration, .eventDetail .duration {
+    text-align: right; }
+  .event .notesForm, .eventDetail .notesForm {
+    cursor: pointer; }
+
+#in-progress {
+  border: 2px solid #11cc77; }
+
+.event {
+  cursor: pointer; }
+.post {
+  border: 1px solid black;
+  padding: 20px;
+  margin: 10px 0px; }
+  .post .tags {
+    font-weight: 300; }
+.project {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px 0px;
+  padding: 10px;
+  border: 1px solid black; }
+  .project .name, .project .count {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1; }
+  .project .count {
+    text-align: right;
+    -ms-flex-item-align: end;
+        align-self: flex-end; }
+#members-only {
+  text-align: center; }

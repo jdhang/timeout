@@ -9,13 +9,18 @@ export default function Project ({ project }) {
 
   return (
     <div className='project'>
-      <div className='name'>
-        <div className='header'>Name</div>
-        <Text bold={true}>{project.name}</Text>
+      <div className='flexRow'>
+        <div className='name'>
+          <div className='header'>Name</div>
+          <Text bold={true}>{project.name}</Text>
+        </div>
+        <div className='count'>
+          <div className='header'>Events</div>
+          <Text bold={true}>{project.events.length}</Text>
+        </div>
       </div>
-      <div className='count'>
-        <div className='header'>Events</div>
-        <Text bold={true}>{project.events.length}</Text>
+      <div className='flexRow'>
+        <div className='details'>Details</div>
       </div>
     </div>
   )

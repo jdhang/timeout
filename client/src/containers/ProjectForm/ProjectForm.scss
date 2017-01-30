@@ -1,0 +1,19 @@
+.formBorder {
+  border: 2px solid black;
+  // border: 2px solid rgb(17, 204, 119);
+  padding: 20px 10px;
+}
+
+.flexRow {
+  display: flex;
+  align-items: center;
+}
+
+.flexCol {
+  flex: 2;
+}
+
+.flexColFixed {
+  width: 43px;
+  margin-left: 10px;
+}
