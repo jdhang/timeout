@@ -20,6 +20,9 @@ const definitions = {
     type: DataTypes.STRING,
     defaultValue: 'track'
   },
+  duration: {
+    type: DataTypes.FLOAT
+  },
   notes: {
     type: DataTypes.TEXT
   },

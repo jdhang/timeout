@@ -1,0 +1,22 @@
+.SwitchField {
+  margin-bottom: 16px;
+
+  .switchRow {
+    display: flex;
+    align-items: center;
+    height: 32px;
+
+    .switchLabel, .switch {
+      margin-right: 8px;
+    }
+
+    .switchLabel {
+      flex-basis: auto;
+      cursor: pointer;
+    }
+
+    .switch {
+      text-align: center;
+    }
+  }
+}

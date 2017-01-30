@@ -5,6 +5,7 @@ import {push} from 'react-router-redux'
 import {Field, reduxForm} from 'redux-form'
 import {Select, TextField} from 'shared'
 import {Button, Label, Switch} from 'rebass'
+import './EventForm.scss'
 
 class EventForm extends Component {
   static propTypes = {
@@ -40,9 +41,12 @@ class EventForm extends Component {
 
     if (show) {
       return (
-        <div>
-          Duration Input
-        </div>
+        <TextField
+          name='duration'
+          label='Duration'
+          placeholder='0:00'
+          type='text'
+        />
       );
     }
   }
@@ -52,11 +56,15 @@ class EventForm extends Component {
     const newValue = checked ? 'track' : 'timed';
 
     return (
-      <div>
-        <div><Label>{label}</Label></div>
-        <span>Tracking</span>
-        <Switch checked={checked} onClick={() => onChange(newValue)} />
-        <span>Timed</span>
+      <div className='SwitchField'>
+        <Label>{label}</Label>
+        <div className='switchRow'>
+          <div className='switchLabel' onClick={onChange.bind(null, 'track')}>Tracking</div>
+          <div className='switch'>
+            <Switch className='flexCol' checked={checked} onClick={onChange.bind(null, newValue)} />
+          </div>
+          <div className='switchLabel' onClick={onChange.bind(null, 'timed')}>Timed</div>
+        </div>
       </div>
     );
   }
