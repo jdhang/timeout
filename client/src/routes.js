@@ -77,6 +77,7 @@ const getRoutes = (store) => {
         <Route path='p/:postId' component={PostContainer} />
         <Route path='e/:eventId' component={EventDetail} />
         <Route path='e/:eventId/addPost' components={PostFormContainer} />
+        <Route path='events' components={Events} />
       </Route>
 
       { /* Unauthenticated Routes Only */ }
@@ -87,7 +88,6 @@ const getRoutes = (store) => {
 
       { /* Routes */ }
       <Route path='posts' components={Posts} />
-      <Route path='events' components={Events} />
 
       { /* Catch all routes */ }
       <Route path='*' component={NotFound} />

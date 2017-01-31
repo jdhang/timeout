@@ -16,7 +16,8 @@ class Events extends Component {
     loadEvents: PropTypes.func,
     loadToday: PropTypes.func,
     loading: PropTypes.bool,
-    events: PropTypes.array
+    events: PropTypes.array,
+    pathname: PropTypes.string
   }
 
   static defaultProps = {
@@ -30,8 +31,8 @@ class Events extends Component {
   }
 
   componentDidMount () {
-    const {filter, loadEvents, loadToday} = this.props;
-    if (filter === 'all') {
+    const {filter, pathname, loadEvents, loadToday} = this.props;
+    if (filter === 'all' || (/(events)/i).test(pathname)) {
       loadEvents();
     } else if (filter === 'today') {
       loadToday();
@@ -77,10 +78,11 @@ class Events extends Component {
 }
 
 function mapStateToProps (state, ownProps) {
-  const {events} = state;
+  const {events, routing} = state;
   return {
     loading: events.loading,
-    events: events.data
+    events: events.data,
+    pathname: ownProps.pathname || ownProps.location.pathname
   }
 }
 

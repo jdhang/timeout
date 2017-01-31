@@ -26,17 +26,14 @@ class Home extends Component {
     currentEvent: PropTypes.object,
     loadCurrentEvent: PropTypes.func,
     loadingCurrent: PropTypes.bool,
-    creating: PropTypes.bool
+    creating: PropTypes.bool,
+    pathname: PropTypes.string
   }
 
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      showEventForm: false,
-      showProjectForm: false,
-      showNotes: false
-    }
+  state = {
+    showEventForm: false,
+    showProjectForm: false,
+    showNotes: false
   }
 
   componentDidMount () {
@@ -155,10 +152,11 @@ class Home extends Component {
   }
 
   renderContent = () => {
+    const {pathname} = this.props;
     const {showEventForm} = this.state;
 
     if (showEventForm) {
-      return <Events />
+      return <Events pathname={pathname} />
     } else {
       return (
         <div className='content'>
@@ -172,7 +170,7 @@ class Home extends Component {
           </div>
           <div className='right'>
             <h4>Today's Events</h4>
-            <Events />
+            <Events pathname={pathname} />
           </div>
         </div>
       );
@@ -216,7 +214,8 @@ function mapStateToProps (state, ownProps) {
     currentEvent: events.current,
     loadingCurrent: events.loadingCurrent,
     creating: events.creating,
-    projects: projects.data
+    projects: projects.data,
+    pathname: ownProps.location.pathname
   }
 }
 
