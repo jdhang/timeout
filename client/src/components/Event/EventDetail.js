@@ -24,13 +24,6 @@ class EventDetail extends Component {
     loadEvent(eventId);
   }
 
-  renderNotes = () => {
-    const {event} = this.props;
-    const notes = _find(event.posts, {type: 'notes'});
-
-    return <Post post={notes} />
-  }
-
   renderPosts = () => {
     const {event} = this.props;
 
@@ -65,7 +58,10 @@ class EventDetail extends Component {
               <span>{Moment.utc(Moment.duration(Moment(event.endTime).diff(event.createdAt)).asMilliseconds()).format('HH:mm:ss')}</span>
             </div>
           </div>
-          {this.renderNotes()}
+          <div className='eventDetail'>
+            <Text bold={true}>Notes</Text>
+            <div className='notes'>{event.notes}</div>
+          </div>
           {this.renderPosts()}
         </div>
       );

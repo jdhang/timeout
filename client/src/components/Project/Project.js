@@ -19,9 +19,6 @@ export default function Project ({ project }) {
           <Text bold={true}>{project.events.length}</Text>
         </div>
       </div>
-      <div className='flexRow'>
-        <div className='details'>Details</div>
-      </div>
     </div>
   )
 }

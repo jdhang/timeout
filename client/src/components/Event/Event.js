@@ -1,13 +1,22 @@
 'use strict'
 
-import React, {PropTypes} from 'react'
-import Moment from 'moment'
-import {Arrow, Text} from 'rebass'
-import {TextArea} from 'shared'
-import {PostFormContainer} from 'containers'
-import './Event.scss'
+import React, {PropTypes} from 'react';
+import Moment from 'moment';
+import {Field, reduxForm} from 'redux-form';
+import {Arrow, Text, Button} from 'rebass';
+import {TextArea} from 'shared';
+import {PostFormContainer} from 'containers';
+import './Event.scss';
 
-export default function Event ({ event, show, showForm, hideForm, handleSelect }) {
+function Event ({
+  event,
+  show,
+  toggleForm,
+  handleUpdate,
+  handleSubmit,
+  handleSelect,
+  dirty
+}) {
 
   function renderEnd () {
     if (event.endTime) {
@@ -38,16 +47,40 @@ export default function Event ({ event, show, showForm, hideForm, handleSelect }
     }
   }
 
-  function renderNotesForm () {
+  function renderNotesToggle () {
     if (event.status === 'in-progress') {
       return (
-        <div className='notesForm'>
-          <div onClick={show ? hideForm : showForm}>
-            Take Notes
+        <div className='notesRow'>
+          <div className='notesToggle' onClick={toggleForm}>
+            {show ? 'Hide' : 'Show'} Notes
             <Arrow direction={show ? 'down' : 'up'} />
           </div>
-          {show ? <TextArea name='notes' label='Name' /> : null}
+          {renderNotesForm()}
         </div>
+      );
+    }
+  }
+
+  function renderNotesForm () {
+    if (show) {
+      return (
+        <form className='notesForm' onSubmit={handleSubmit(handleUpdate)}>
+          <TextArea
+            name='notes'
+            label='Notes'
+            hideLabel={true}
+            rows={6}
+          />
+          {
+            dirty
+            ? (
+              <Button type='submit' theme='success'>
+                Save Notes
+              </Button>
+            )
+            : null
+          }
+        </form>
       );
     }
   }
@@ -70,15 +103,22 @@ export default function Event ({ event, show, showForm, hideForm, handleSelect }
         {renderEnd()}
         {renderDuration()}
       </div>
-      {renderNotesForm()}
+      {renderNotesToggle()}
     </div>
   )
 }
 
 Event.propTypes = {
+  dirty: PropTypes.bool,
   event: PropTypes.object,
   show: PropTypes.bool,
-  showForm: PropTypes.func,
-  hideForm: PropTypes.func,
+  toggleForm: PropTypes.func,
+  handleUpdate: PropTypes.func,
+  handleSubmit: PropTypes.func,
   handleSelect: PropTypes.func
 }
+
+export default reduxForm({
+  form: 'currentEventForm',
+  enableReinitialize: true
+})(Event);

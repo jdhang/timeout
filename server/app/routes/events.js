@@ -98,7 +98,7 @@ router.post('/:id', (req, res, next) => {
       throw new Error('Could not update event');
     }
   })
-  .then(result => res.send({event: result[1][0]}))
+  .then(event => res.send({event}))
   .catch(next);
 });
 

@@ -18,6 +18,7 @@ class Home extends Component {
     createProject: PropTypes.func,
     projects: PropTypes.object,
     createEvent: PropTypes.func,
+    updateEvent: PropTypes.func,
     endEvent: PropTypes.func,
     loaded: PropTypes.bool,
     login: PropTypes.func,
@@ -34,7 +35,7 @@ class Home extends Component {
     this.state = {
       showEventForm: false,
       showProjectForm: false,
-      showPostForm: false
+      showNotes: false
     }
   }
 
@@ -56,10 +57,19 @@ class Home extends Component {
     this.setState({ showProjectForm: !this.state.showProjectForm });
   }
 
+  toggleNotes = () => {
+    this.setState({ showNotes: !this.state.showNotes });
+  }
+
   handleCreateEvent = (data) => {
     const {createEvent} = this.props;
     createEvent(data);
     this.setState({ showEventForm: false });
+  }
+
+  handleUpdateEvent = (data) => {
+    const {updateEvent} = this.props;
+    updateEvent(data);
   }
 
   handleEndEvent = () => {
@@ -74,8 +84,9 @@ class Home extends Component {
     this.setState({ showProjectForm: false });
   }
 
+
   renderEventForm = () => {
-    const {showEventForm, showProjectForm, showPostForm} = this.state;
+    const {showEventForm, showProjectForm, showNotes} = this.state;
     const {currentEvent, loadingCurrent, creating, projects} = this.props;
 
     if (loadingCurrent || creating) {
@@ -84,10 +95,11 @@ class Home extends Component {
       return (
         <div>
           <Event
+            initialValues={currentEvent}
             event={currentEvent}
-            show={showPostForm}
-            showForm={this.showPostForm}
-            hideForm={this.hidePostForm}
+            show={showNotes}
+            toggleForm={this.toggleNotes}
+            handleUpdate={this.handleUpdateEvent}
           />
           <Button theme='error' onClick={this.handleEndEvent}>
             <i className='fa fa-times fa-fw'></i> Stop Event

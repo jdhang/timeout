@@ -14,6 +14,10 @@ const CREATE_EVENT_REQUEST = 'CREATE_EVENT_REQUEST'
 const CREATE_EVENT_SUCCESS = 'CREATE_EVENT_SUCCESS'
 const CREATE_EVENT_FAILURE = 'CREATE_EVENT_FAILURE'
 
+const UPDATE_EVENT_REQUEST = 'UPDATE_EVENT_REQUEST'
+const UPDATE_EVENT_SUCCESS = 'UPDATE_EVENT_SUCCESS'
+const UPDATE_EVENT_FAILURE = 'UPDATE_EVENT_FAILURE'
+
 const END_EVENT_REQUEST = 'END_EVENT_REQUEST'
 const END_EVENT_SUCCESS = 'END_EVENT_SUCCESS'
 const END_EVENT_FAILURE = 'END_EVENT_FAILURE'
@@ -30,6 +34,7 @@ const initialState = {
   loading: false,
   loadingCurrent: false,
   creating: false,
+  updating: false,
   data: [],
   selected: null,
   current: null,
@@ -48,6 +53,12 @@ export default function reducer (state = initialState, action) {
       return {
         ...state,
         creating: true
+      }
+    case UPDATE_EVENT_REQUEST:
+    case END_EVENT_REQUEST:
+      return {
+        ...state,
+        updating: true
       }
     case LOAD_CURRENT_EVENT_REQUEST:
       return {
@@ -76,9 +87,11 @@ export default function reducer (state = initialState, action) {
         data: action.data,
         error: null
       }
+    case UPDATE_EVENT_SUCCESS:
     case END_EVENT_SUCCESS:
       return {
         ...state,
+        updating: false,
         current: action.result.event,
         data: action.data,
         error: null
@@ -109,9 +122,11 @@ export default function reducer (state = initialState, action) {
         creating: false,
         error: action.error.response
       }
+    case UPDATE_EVENT_FAILURE:
     case END_EVENT_FAILURE:
       return {
         ...state,
+        updating: false,
         error: action.error.response
       }
     case LOAD_CURRENT_EVENT_FAILURE:
@@ -172,6 +187,25 @@ export const createEvent = (eventData) => (dispatch, getState) => {
   });
 }
 
+export const updateEvent = (eventData) => (dispatch, getState) => {
+  dispatch({ type: UPDATE_EVENT_REQUEST });
+  const { events: { data } } = getState();
+  const eventIdx = data.find(event => event.id === eventData.Id);
+
+  return events.updateEvent(eventData).then(parseData)
+  .then(result => {
+    const newData = [...data];
+    newData[eventIdx] = result.event;
+    return dispatch({ type: UPDATE_EVENT_SUCCESS, result, data: newData });
+  }, error => dispatch({ type: UPDATE_EVENT_FAILURE, error }))
+  .catch(error => {
+    dispatch({
+      type: UPDATE_EVENT_FAILURE,
+      error: `ERROR: ${error.messsage}`
+    })
+  });
+}
+
 export const endEvent = (eventId) => (dispatch, getState) => {
   dispatch({ type: END_EVENT_REQUEST });
   const { events: { data } } = getState();
@@ -197,5 +231,6 @@ export const eventActions = {
   loadEvent,
   loadCurrentEvent,
   createEvent,
+  updateEvent,
   endEvent,
 }

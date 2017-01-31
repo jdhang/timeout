@@ -18,25 +18,30 @@ export const getById = (id) => {
   return axios.get(`${BASE_URL}/api/events/${id}`)
 }
 
+export const getCurrent = () => {
+  return axios.get(`${BASE_URL}/api/events/current`)
+}
+
 export const createEvent = (eventData) => {
   return axios.post(`${BASE_URL}/api/events`, eventData)
+}
+
+export const updateEvent = (eventData) => {
+  return axios.post(`${BASE_URL}/api/events/${eventData.id}`, eventData)
 }
 
 export const endEvent = (eventId) => {
   return axios.post(`${BASE_URL}/api/events/${eventId}/end`)
 }
 
-export const getCurrent = () => {
-  return axios.get(`${BASE_URL}/api/events/current`)
-}
-
 const events = {
   getAll,
   getToday,
   getById,
+  getCurrent,
   createEvent,
+  updateEvent,
   endEvent,
-  getCurrent
 }
 
 export default events

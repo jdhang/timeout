@@ -1,6 +1,6 @@
 .event, .eventDetail {
   margin: 10px 0px;
-  padding: 10px;
+  padding: 15px;
   border: 1px solid black;
 
   .flexRow {
@@ -8,7 +8,14 @@
     align-items: center;
   }
 
-  .title, .midCol, .inProgress, .postForm {
+  .notes {
+  }
+
+  .title {
+    flex: 3;
+  }
+
+  .midCol, .inProgress, .postForm {
     flex: 2;
   }
 
@@ -30,8 +37,15 @@
     text-align: right;
   }
 
-  .notesForm {
-    cursor: pointer;
+  .notesRow {
+    .notesToggle {
+      font-size: 90%;
+      cursor: pointer;
+    }
+
+    .notesForm {
+      margin-top: 5px;
+    }
   }
 }
 
