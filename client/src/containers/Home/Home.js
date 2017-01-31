@@ -141,7 +141,7 @@ class Home extends Component {
     const {showProjectForm} = this.state;
     return (
       <span className='button'>
-        <Tooltip title={showProjectForm ? 'Hide Form' : 'AddProject'}>
+        <Tooltip title={showProjectForm ? 'Hide Form' : 'Add Project'}>
           <Button
             style={{ padding: '3px 5px 2px', minHeight: 0 }}
             theme={showProjectForm ? 'error' : 'success'}
